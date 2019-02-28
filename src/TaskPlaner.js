@@ -2,6 +2,12 @@ import React, { Component } from 'react';
 import SvgIcon from '@material-ui/core/SvgIcon';
 import UpperBar from './UpperBar.js';
 import TaskCard from './TaskCard.js';
+import AddIcon from '@material-ui/icons/Add';
+import Fab from "@material-ui/core/Fab";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+
+
+
 
 function HomeIcon(props) {
     return (
@@ -25,6 +31,14 @@ class TaskPlaner extends React.Component{
 
     render(){
         const tasks=JSON.parse(localStorage.getItem("tasks"));
+        const style = {
+            margin: 0,
+            top: 'auto',
+            right: 20,
+            bottom: 20,
+            left: 'auto',
+            position: 'fixed'
+        };
         return(
             <div className="TaskPlanner">
                 <UpperBar/>
@@ -39,6 +53,14 @@ class TaskPlaner extends React.Component{
                                     <p/>
                         </div>
                                      )})}
+
+                <Link to="/newtask">
+                    <Fab style={style} aria-label="Add" color='primary'>
+                        <AddIcon/>
+                    </Fab>
+                </Link>
+
+
             </div>
         );
     }

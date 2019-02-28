@@ -1,0 +1,4 @@
+https://task-planner-react.herokuapp.com/
+https://github.com/davd62133/Task-Planner-App
+user:admin
+password:admin

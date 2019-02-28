@@ -45,7 +45,7 @@ class Login extends React.Component{
                                   onChange={this.handleChange}
                                   margin="normal"
                                   variant="outlined"
-                                  required="true"
+                                  required={true}
                                 />
                          <p/>
                         <TextField
@@ -56,7 +56,7 @@ class Login extends React.Component{
                                   onChange={this.handleChange}
                                   margin="normal"
                                   variant="outlined"
-                                  required="true"
+                                  required={true}
                                   type="password"
                                  />
                         <p/>
