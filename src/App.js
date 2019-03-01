@@ -7,13 +7,13 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import UpdateProfile from "./UpdateProfile";
 import UpdateTask from './UpdateTask';
 
-if(localStorage.getItem("username")==="undefined"){
+if(localStorage.getItem("username")===null){
     localStorage.setItem('username', 'admin');
 }
-if(localStorage.getItem("password")==="undefined"){
+if(localStorage.getItem("password")===null){
     localStorage.setItem('password', 'admin');
 }
-if(localStorage.getItem('tasks')==="undefined"){
+if(localStorage.getItem('tasks')===null){
 localStorage.setItem('tasks', JSON.stringify([]))};
 
 const Home = () => (
