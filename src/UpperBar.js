@@ -195,7 +195,7 @@ class UpperBar extends React.Component{
                                 <p/>
                                 {localStorage.getItem('username')}
                                 <p/>
-                                <Button component={Link} to="/update">Edit</Button>
+                                <Button component={Link} to={{pathname:"/update", state:{"newuser":false}}}>Edit</Button>
                                 <Divider/>
                                 <div style={bottomStyle}>
                                     <Divider/>

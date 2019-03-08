@@ -23,14 +23,21 @@ class TaskPlaner extends React.Component{
         super(props);
         this.state = {drawer:false};
         this.toggleDrawer = this.toggleDrawer.bind(this);
+        this.state = {tasks:[]}
     }
 
     toggleDrawer(event){
         this.setState({drawer:true});
     }
 
+    componentDidMount() {
+        fetch(this.props.host+"/gettasks?userid="+localStorage.username)
+            .then(response => response.json())
+            .then(data => this.setState({ tasks:data }));
+    }
+
     render(){
-        const tasks=JSON.parse(localStorage.getItem("tasks"));
+        const {tasks} = this.state;
         const style = {
             margin: 0,
             top: 'auto',
@@ -45,11 +52,12 @@ class TaskPlaner extends React.Component{
                 <p/>
                 {tasks.map((value)=>{
                     return (
-                        <div key={"div" + value.description}>
+                        <div key={value.id}>
                         <TaskCard description={value.description}
-                                     responsible={value.responsible}
-                                     dueDate={value.dueDate}
-                                     status={value.status}/>
+                                     responsible={localStorage.username}
+                                     dueDate={value.date}
+                                     status={value.status}
+                                    id={value.id}/>
                                     <p/>
                         </div>
                                      )})}

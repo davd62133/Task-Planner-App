@@ -33,10 +33,20 @@ class NewTask extends React.Component{
         e.preventDefault();
         //localStorage.tasks.concat(JSON.stringify(this.state));
         //console.log(JSON.parse(localStorage.tasks).push(this.state))
-        var parse = JSON.parse(localStorage.tasks);
-        parse.push(this.state);
-        localStorage.tasks = JSON.stringify(parse);
-        window.alert("Task Added succesfully");
+
+        fetch(this.props.host + "/addtask?userId="+localStorage.username, {
+            method: 'PUT',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                id: this.state.description+this.state.dueDate+this.state.status,
+                description : this.state.description,
+                date: this.state.dueDate,
+                status: this.state.status
+            })
+        }).then(response => window.alert("Task Added succesfully"));
     }
 
     render(){

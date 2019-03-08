@@ -16,28 +16,31 @@ if(localStorage.getItem("password")===null){
 if(localStorage.getItem('tasks')===null){
 localStorage.setItem('tasks', JSON.stringify([]))};
 
+const host = "http://localhost:8080/taskplanner";
+
 const Home = () => (
         <Router>
             <>
-                <Route exact path="/" component={TaskPlaner}/>
-                <Route path="/newtask" component={NewTask} />
-                <Route path="/update" component={UpdateProfile}/>
-                <Route path="/updatetask" component={UpdateTask}/>
+                {localStorage.getItem('isLoggedIn')==="true"?
+                    <Route exact path="/" component={(props) => <TaskPlaner {...props} host={host} />}  />:
+                    <Route exact path="/" component={(props) => <Login {...props} host={host} />} />}
+
+                <Route path="/newtask" component={(props) => <NewTask {...props} host={host} />} />
+                <Route path="/update" component={(props) => <UpdateProfile {...props} host={host} />} />
+                <Route path="/updatetask" component={(props) => <UpdateTask {...props} host={host} />} />
                 </>
         </Router>
 )
 
 
-class App extends Component {
+export default class App extends Component {
   render() {
 
-    return (
-      <div className="App" align="center">
-        {localStorage.getItem('isLoggedIn')==="true"?
-            <Home/>:<Login/>}
-      </div>
-    );
+      return (
+          <div className="App" align="center">
+              <Home/>
+          </div>
+      );
   }
 }
 
-export default App;

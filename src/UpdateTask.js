@@ -20,7 +20,8 @@ export default class UpdateTask extends React.Component{
                 description: props.location.state.description,
                 status: props.location.state.status,
                 responsible: props.location.state.responsible,
-                dueDate: props.location.state.dueDate};
+                dueDate: props.location.state.dueDate,
+            id:props.location.state.id};
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -42,6 +43,20 @@ export default class UpdateTask extends React.Component{
                 localStorage.setItem("tasks",JSON.stringify(list));
             }
         }
+
+        fetch(this.props.host + "/updatetask", {
+            method: 'PUT',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                id: this.state.id,
+                description : this.state.description,
+                date: this.state.dueDate,
+                status: this.state.status
+            })
+        }).then(response => window.alert("Task Added succesfully"));
         window.alert("Update succesfully");
     }
 
@@ -52,6 +67,7 @@ export default class UpdateTask extends React.Component{
     }
 
     render(){
+        console.log(this.state);
         return(
           <>
               <UpperBar/>

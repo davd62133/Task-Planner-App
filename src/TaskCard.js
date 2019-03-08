@@ -28,7 +28,8 @@ class TaskCard extends React.Component{
                           description : this.props.description,
                           status : this.props.status,
                           responsible : this.props.responsible,
-                          dueDate : this.props.dueDate
+                          dueDate : this.props.dueDate,
+                          id: this.props.id
                       }}}>
                       <CardContent>
                           <Typography variant="h5">
