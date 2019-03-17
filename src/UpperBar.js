@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import IconButton from '@material-ui/core/IconButton';
 import SvgIcon from '@material-ui/core/SvgIcon';
 import Drawer from '@material-ui/core/Drawer';
@@ -88,13 +88,14 @@ class UpperBar extends React.Component{
             position:'absolute',
             bottom:0
         };
-        var cardStyle = {
+
+        const cardStyle = {
             display: 'block',
             width: '70vw',
             height: '70vh'
         }
 
-        const { auth, anchorEl } = this.state;
+        const { anchorEl } = this.state;
         const open = Boolean(anchorEl);
 
         return(

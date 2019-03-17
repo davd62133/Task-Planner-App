@@ -1,10 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
 import user from "./images/user.png";
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import Typography from '@material-ui/core/Typography';
 import {Link}  from "react-router-dom";
+import axios from 'axios';
 
 export default class UpdateProfile extends React.Component {
 
@@ -24,47 +25,52 @@ export default class UpdateProfile extends React.Component {
 
     handleSubmit(e) {
         e.preventDefault();
-        if(this.props.location.state.newuser === true){
-            this.createUser();
-        }else{
-            this.updateUser();
-        }
+
         if (this.state.password !== this.state.confirm) {
             window.alert("Password are not the same");
         } else{
-            localStorage.setItem("username", this.state.username);
-        localStorage.setItem("password", this.state.password);
+            if(this.props.location.state.newuser === true){
+                this.createUser();
+                localStorage.setItem("username", this.state.username);
+            }else{
+                this.updateUser();
             }
-        window.alert("Account Uploades")
+            }
         }
 
         createUser() {
-            fetch(this.props.host + "/createuser", {
-                method: 'PUT',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    id: this.state.username,
-                    password: this.state.password
+            axios.post(this.props.host+'/user/signup', {
+                id: this.state.username,
+                password: this.state.password
+            })
+                .then(function (response) {
+                    if(response.data){
+                        window.alert("Account Created");
+                    }else{
+                        window.alert("Account Already exists, Choose another username");
+                    }
                 })
-            }).then(response => console.log("User Created"));
+                .catch(function (error) {
+                    console.log(error);
+                });
         }
 
         updateUser() {
-            fetch(this.props.host + "/updateuser", {
-                method: 'PUT',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    id: this.state.username,
-                    password: this.state.password
-                })
-            }).then(response => console.log("User Created"));
+
+            axios.put(this.props.host+'/taskplanner/updateuser',{
+                id: this.state.username,
+                password: this.state.password
+            },{
+                headers:{
+                    Authorization: 'Bearer '+localStorage.getItem("accessToken")
+                }
+            }).then(function (response) {
+                window.alert("User Updated")
+            }).catch(function (error) {
+                console.log(error);
+            })
         }
+
 
 
 
@@ -73,12 +79,11 @@ export default class UpdateProfile extends React.Component {
             display: 'block',
             width: '70vw',
             height: '90vh'
-        }
+        };
 
         return(
             <>
                 <Card style={cardStyle}>
-                    {console.log(this.props)}
                     {this.props.location.state.newuser === true ?
                         <Typography variant="h5">
                             New User Information

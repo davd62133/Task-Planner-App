@@ -1,21 +1,10 @@
-import React, { Component } from 'react';
-import SvgIcon from '@material-ui/core/SvgIcon';
+import React from 'react';
 import UpperBar from './UpperBar.js';
 import TaskCard from './TaskCard.js';
 import AddIcon from '@material-ui/icons/Add';
 import Fab from "@material-ui/core/Fab";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-
-
-
-
-function HomeIcon(props) {
-    return (
-        <SvgIcon {...props}>
-            <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
-        </SvgIcon>
-    );
-}
+import { Link } from "react-router-dom";
+import axios from "axios";
 
 class TaskPlaner extends React.Component{
 
@@ -31,9 +20,16 @@ class TaskPlaner extends React.Component{
     }
 
     componentDidMount() {
-        fetch(this.props.host+"/gettasks?userid="+localStorage.username)
-            .then(response => response.json())
-            .then(data => this.setState({ tasks:data }));
+        var now = this;
+        axios.get(this.props.host+"/taskplanner/gettasks?userid="+localStorage.username,{
+            headers:{
+                Authorization: 'Bearer '+localStorage.getItem("accessToken")
+            }
+        }).then(function (response) {
+            now.setState({tasks:response.data});
+        }).catch(function (error) {
+            console.log(error);
+        })
     }
 
     render(){

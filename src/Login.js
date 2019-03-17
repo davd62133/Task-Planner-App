@@ -1,9 +1,10 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Card from '@material-ui/core/Card';
 import user from "./images/user.png";
-import {Link} from "react-router-dom"
+import {Link} from "react-router-dom";
+import axios from 'axios';
 
 class Login extends React.Component{
 
@@ -22,9 +23,17 @@ class Login extends React.Component{
 
     handleSubmit(event){
         localStorage.setItem("username",this.state.username);
-        fetch(this.props.host + "/authorizeuser?id="+this.state.username+"&password="+this.state.password)
-            .then(response => response.json())
-            .then(data => data?localStorage.setItem('isLoggedIn',true): localStorage.setItem('isLoggedIn',false));
+        axios.post(this.props.host+'/user/login', {
+            id: this.state.username,
+            password: this.state.password
+        })
+            .then(function (response) {
+                localStorage.setItem("accessToken", response.data.accessToken);
+                localStorage.setItem("isLoggedIn","true");
+            })
+            .catch(function (error) {
+                window.alert("Wrong credencials");
+            });
     }
 
 	render(){
@@ -35,7 +44,6 @@ class Login extends React.Component{
         }
 		return(
             <div className="Login">
-                {console.log(this.props)}
                 <Card style={cardStyle}>
                     <img alt="" src={user} width={100} height={100}/>
                 <form onSubmit={this.handleSubmit}>

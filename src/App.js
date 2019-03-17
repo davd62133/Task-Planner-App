@@ -3,7 +3,7 @@ import './App.css';
 import Login from './Login.js';
 import TaskPlaner from './TaskPlaner';
 import NewTask from './NewTask.js';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import UpdateProfile from "./UpdateProfile";
 import UpdateTask from './UpdateTask';
 
@@ -16,7 +16,7 @@ if(localStorage.getItem("password")===null){
 if(localStorage.getItem('tasks')===null){
 localStorage.setItem('tasks', JSON.stringify([]))};
 
-const host = "http://localhost:8080/taskplanner";
+const host = "http://localhost:8080";
 
 const Home = () => (
         <Router>

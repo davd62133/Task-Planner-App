@@ -1,26 +1,13 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Card from '@material-ui/core/Card';
 import {CardContent} from "@material-ui/core";
 import Typography from '@material-ui/core/Typography';
 import {Link}  from "react-router-dom";
 import CardActionArea from '@material-ui/core/CardActionArea';
 
-function update(){
-    return(
-        window.location.assign('/updatetask')
-    );
-}
-
 class TaskCard extends React.Component{
 
-    constructor(props){
-        super(props);
-    }
-
-
     render() {
-
-
         return(
           <div className="TaskCard">
               <Card>

@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React from "react";
 import UpperBar from "./UpperBar";
 import Typography from '@material-ui/core/Typography';
 import {Card} from "@material-ui/core";
@@ -11,6 +11,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
+import axios from "axios";
 
 
 class NewTask extends React.Component{
@@ -31,22 +32,20 @@ class NewTask extends React.Component{
 
     handleSubmit(e){
         e.preventDefault();
-        //localStorage.tasks.concat(JSON.stringify(this.state));
-        //console.log(JSON.parse(localStorage.tasks).push(this.state))
-
-        fetch(this.props.host + "/addtask?userId="+localStorage.username, {
-            method: 'PUT',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                id: this.state.description+this.state.dueDate+this.state.status,
-                description : this.state.description,
-                date: this.state.dueDate,
-                status: this.state.status
-            })
-        }).then(response => window.alert("Task Added succesfully"));
+        axios.put(this.props.host+'/taskplanner/addtask?userId='+localStorage.username,{
+            id: this.state.description+this.state.dueDate+this.state.status,
+            description : this.state.description,
+            date: this.state.dueDate,
+            status: this.state.status
+        },{
+            headers:{
+                Authorization: 'Bearer '+localStorage.getItem("accessToken")
+            }
+        }).then(function (response) {
+            window.alert("Task Added")
+        }).catch(function (error) {
+            console.log(error);
+        })
     }
 
     render(){
@@ -90,7 +89,6 @@ class NewTask extends React.Component{
                                 onChange={this.handleChange}
                                 input={
                                     <OutlinedInput
-                                        labelWidth={this.state.labelWidth}
                                         name="status"
                                         id="status"
                                         labelWidth={100}
