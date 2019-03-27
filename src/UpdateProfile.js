@@ -40,7 +40,7 @@ export default class UpdateProfile extends React.Component {
 
         createUser() {
             axios.post(this.props.host+'/user/signup', {
-                id: this.state.username,
+                username: this.state.username,
                 password: this.state.password
             })
                 .then(function (response) {
@@ -58,7 +58,7 @@ export default class UpdateProfile extends React.Component {
         updateUser() {
 
             axios.put(this.props.host+'/taskplanner/updateuser',{
-                id: this.state.username,
+                username: this.state.username,
                 password: this.state.password
             },{
                 headers:{

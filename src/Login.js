@@ -22,16 +22,20 @@ class Login extends React.Component{
     }
 
     handleSubmit(event){
+    event.preventDefault();
         localStorage.setItem("username",this.state.username);
         axios.post(this.props.host+'/user/login', {
-            id: this.state.username,
+            username: this.state.username,
             password: this.state.password
         })
             .then(function (response) {
+                console.log(response);
                 localStorage.setItem("accessToken", response.data.accessToken);
                 localStorage.setItem("isLoggedIn","true");
+                window.location.pathname = '/';
             })
             .catch(function (error) {
+
                 window.alert("Wrong credencials");
             });
     }

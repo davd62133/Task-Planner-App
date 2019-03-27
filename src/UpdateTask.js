@@ -44,7 +44,7 @@ export default class UpdateTask extends React.Component{
             }
         }
 
-        axios.put(this.props.host+'/taskplanner/updatetask',{
+        axios.put(this.props.host+'/taskplanner/updatetask?userId='+localStorage.username,{
             id: this.state.id,
             description : this.state.description,
             date: this.state.dueDate,

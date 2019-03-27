@@ -22,6 +22,7 @@ class NewTask extends React.Component{
                 this.props.responsible:localStorage.getItem('username'), "status":'To start',"dueDate":''};
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleInputChange = this.handleInputChange.bind(this);
     }
 
     handleChange(e){
@@ -47,6 +48,12 @@ class NewTask extends React.Component{
             console.log(error);
         })
     }
+
+    handleInputChange(e) {
+                this.setState({
+                    file: e.target.files[0]
+                });
+            }
 
     render(){
 
@@ -113,6 +120,9 @@ class NewTask extends React.Component{
                             required={true}
                             shrink="true"
                         />
+                        <br/>
+                         <input type="file" id="file" onChange={this.handleInputChange}/>
+                         <br/>
                         <Button type="submit"
                                 fullWidth
                                 color="primary"
